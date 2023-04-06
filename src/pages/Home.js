@@ -17,6 +17,10 @@ function Home() {
       .then((data) => {
         setUsers(data);
         setDone(true);
+      })
+      .catch((err) => {
+        alert(err.message);
+        setDone(true);
       });
   };
 
@@ -36,24 +40,28 @@ function Home() {
           <Link to={"/createUser"} className="add-user-btn">
             Create User
           </Link>
-          {users.map((user) => (
-            <Link to={`/user/${user.documentId}`} key={user.documentId}>
-              <div className="user-section">
-                <div className="user-field">
-                  <h3>Name:</h3>
-                  <p>{user.name}</p>
+          {users.length > 0 ? (
+            users.map((user) => (
+              <Link to={`/user/${user.documentId}`} key={user.documentId}>
+                <div className="user-section">
+                  <div className="user-field">
+                    <h3>Name:</h3>
+                    <p>{user.name}</p>
+                  </div>
+                  <div className="user-field">
+                    <h3>Age:</h3>
+                    <p>{user.age}</p>
+                  </div>
+                  <div className="user-field">
+                    <h3>State:</h3>
+                    <p>{user.state}</p>
+                  </div>
                 </div>
-                <div className="user-field">
-                  <h3>Age:</h3>
-                  <p>{user.age}</p>
-                </div>
-                <div className="user-field">
-                  <h3>State:</h3>
-                  <p>{user.state}</p>
-                </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))
+          ) : (
+            <p>No user data</p>
+          )}
         </>
       )}
     </div>
